@@ -12,8 +12,8 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout bg;
-    private TextView textView;
-
+    TextView textView;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
-        EditText editText = findViewById(R.id.editText);
+
+        editText = findViewById(R.id.editText);
 
         //create array adapter for spinner (learn more about this)
         Spinner colorSpinner = findViewById(R.id.colorSpinner);
