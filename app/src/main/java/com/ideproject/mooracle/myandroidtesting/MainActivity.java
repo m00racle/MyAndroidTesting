@@ -1,5 +1,6 @@
 package com.ideproject.mooracle.myandroidtesting;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,7 @@ import android.widget.*;
 
 public class MainActivity extends AppCompatActivity {
     private ConstraintLayout bg;
-    private EditText editText;
     private TextView textView;
-    private Spinner colorSpinner;
-    private Button launchActivityButton;
 
 
     @Override
@@ -23,16 +21,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.textView);
-        editText = findViewById(R.id.editText);
+        EditText editText = findViewById(R.id.editText);
 
         //create array adapter for spinner (learn more about this)
-        colorSpinner = findViewById(R.id.colorSpinner);
+        Spinner colorSpinner = findViewById(R.id.colorSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.colors_array,
                 android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(adapter);
 
-        launchActivityButton = findViewById(R.id.launchActivityButton);
+        Button launchActivityButton = findViewById(R.id.launchActivityButton);
         bg = findViewById(R.id.bg);
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -71,5 +69,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        launchActivityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startOtherActivity();
+            }
+        });
+    }
+
+    private void startOtherActivity() {
+        Intent startOtherActivityIntent = new Intent(this, OtherActivity.class);
+        startActivity(startOtherActivityIntent);
     }
 }
