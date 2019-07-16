@@ -10,15 +10,19 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityView{
     private ConstraintLayout bg;
     TextView textView;
     EditText editText;
+
+    MainActivityPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        presenter = new MainActivityPresenter(this);
 
         textView = findViewById(R.id.textView);
 
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE){
                     //if the action is done get the input text and put it into the text view
-                    textView.setText(v.getText().toString());
+                    String text = v.getText().toString();
+                    presenter.editTextUpdated(text);
                 }
                 return false;
             }
@@ -49,20 +54,8 @@ public class MainActivity extends AppCompatActivity {
         colorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0: //choose background white
-                        bg.setBackgroundColor(Color.WHITE);
-                        break;
-                    case 1: //choose background Magenta
-                        bg.setBackgroundColor(Color.MAGENTA);
-                        break;
-                    case 2: //choose background Green
-                        bg.setBackgroundColor(Color.GREEN);
-                        break;
-                    case 3: //choose background Cyan
-                        bg.setBackgroundColor(Color.CYAN);
-                        break;
-                }
+                // updated using MainActivityPresenter
+                presenter.colorSelected(position);
             }
 
             @Override
@@ -74,12 +67,29 @@ public class MainActivity extends AppCompatActivity {
         launchActivityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startOtherActivity();
+                // use the presenter
+                presenter.launchOtherActivityButtonClicked(OtherActivity.class);
             }
         });
     }
 
-    private void startOtherActivity() {
+//    private void startOtherActivity() {
+//        Intent startOtherActivityIntent = new Intent(this, OtherActivity.class);
+//        startActivity(startOtherActivityIntent);
+//    } //<--unused from now on since we use the MainActivityPresenter class method
+
+    @Override
+    public void changeTextViewText(String text) {
+        textView.setText(text);
+    }
+
+    @Override
+    public void changeBackGroundColor(int color) {
+        bg.setBackgroundColor(color);
+    }
+
+    @Override
+    public void launchOtherActivity(Class activity) {
         Intent startOtherActivityIntent = new Intent(this, OtherActivity.class);
         startActivity(startOtherActivityIntent);
     }
