@@ -11,9 +11,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 
 public class MainActivity extends AppCompatActivity implements MainActivityView{
-    private ConstraintLayout bg;
+    ConstraintLayout bg;
     TextView textView;
     EditText editText;
+    Spinner colorSpinner;
 
     MainActivityPresenter presenter;
 
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         editText = findViewById(R.id.editText);
 
         //create array adapter for spinner (learn more about this)
-        Spinner colorSpinner = findViewById(R.id.colorSpinner);
+
+        colorSpinner = findViewById(R.id.colorSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.colors_array,
                 android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

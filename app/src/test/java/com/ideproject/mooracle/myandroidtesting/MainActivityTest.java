@@ -1,5 +1,7 @@
 package com.ideproject.mooracle.myandroidtesting;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.inputmethod.EditorInfo;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,5 +38,19 @@ public class MainActivityTest {
         //Assert
         String actualString = mainActivity.textView.getText().toString();
         assertEquals(givenString,actualString);
+    }
+
+    @Test
+    public void testSpinnerChangeBackgroundColor() throws Exception{
+        //Arrange
+        int index = 2;
+        int givenColor = Color.GREEN;
+
+        //Act
+        mainActivity.colorSpinner.setSelection(index);
+
+        //Assert
+        int actualColor = ((ColorDrawable)mainActivity.bg.getBackground()).getColor();
+        assertEquals(givenColor, actualColor);
     }
 }
