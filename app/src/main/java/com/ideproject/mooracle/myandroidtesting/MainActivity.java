@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
     TextView textView;
     EditText editText;
     Spinner colorSpinner;
+    Button launchActivityButton;
 
     MainActivityPresenter presenter;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView{
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         colorSpinner.setAdapter(adapter);
 
-        Button launchActivityButton = findViewById(R.id.launchActivityButton);
+        launchActivityButton = findViewById(R.id.launchActivityButton);
         bg = findViewById(R.id.bg);
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {

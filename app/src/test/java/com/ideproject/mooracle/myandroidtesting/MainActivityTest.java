@@ -1,5 +1,6 @@
 package com.ideproject.mooracle.myandroidtesting;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.inputmethod.EditorInfo;
@@ -8,9 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
+import org.robolectric.Shadows;
+import org.robolectric.shadows.ShadowActivity;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
 public class MainActivityTest {
@@ -52,5 +55,20 @@ public class MainActivityTest {
         //Assert
         int actualColor = ((ColorDrawable)mainActivity.bg.getBackground()).getColor();
         assertEquals(givenColor, actualColor);
+    }
+
+    @Test
+    public void testButtonLaunchedOtherActivity() throws Exception {
+        //Arrange
+        Class clazz = OtherActivity.class;
+        Intent expectedIntent = new Intent(mainActivity, clazz);
+
+        //Act
+        mainActivity.launchActivityButton.callOnClick();
+
+        //Assert
+        ShadowActivity shadowActivity = Shadows.shadowOf(mainActivity);
+        Intent actualIntent = shadowActivity.getNextStartedActivity();
+        assertTrue(expectedIntent.filterEquals(actualIntent));
     }
 }
